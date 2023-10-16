@@ -25,7 +25,7 @@ $(document).ready(function() {
            
         ],
         data: valuesOnly,
-        pageLength: 20,
+        pageLength: 17,
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
