@@ -20,12 +20,29 @@ $(document).ready(function() {
             { title: 'Municipality' },
             { title: 'Component.' },
             { title: 'Indicator' },
-            { title: 'Value' },
+            {
+                title: 'Normalized Value',
+                render: function(data, type, row) {
+                    if (type === 'display') {
+                        // Check if data is a number
+                        if (!isNaN(parseFloat(data)) && isFinite(data)) {
+                            // Round to two decimal places
+                            const roundedValue = Number(data).toFixed(2);
+                            // Display 0 instead of 0.00
+                            return roundedValue === '0.00' ? '0' : roundedValue;
+                        } else {
+                            return data;
+                        }
+                    }
+                    return data;
+                }
+            },
+            { title: 'Raw(Actual) Data' },
 
            
         ],
         data: valuesOnly,
-        pageLength: 17,
+        pageLength: 15,
         dom: 'Bfrtip',
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
@@ -48,7 +65,7 @@ $(document).ready(function() {
         // orderCellsTop: true,
         // fixedHeader: true,
         initComplete: function () {
-            var notApplyFilterOnColumn = [5];
+            var notApplyFilterOnColumn = [5,6];
 			var inputFilterOnColumn = [4];
 			var showFilterBox = 'afterHeading'; //beforeHeading, afterHeading
 			$('.gtp-dt-filter-row').remove();
@@ -100,9 +117,6 @@ $(document).ready(function() {
                     $(this).css('background-color', ''); // Reset to default background color
                 }
             });
-            
-            
-            
             // // for search
             // var api = this.api();
             // // For each column
